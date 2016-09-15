@@ -35,16 +35,13 @@ class GovTrack():
 	def search_Bill_ID(self):
 		#This queries the GovTrack Database for bills and returns the ID of that specific bills
 		a = str(raw_input('What bill are you looking for?: '))
-		f = GovTrack.urllib2.urlopen('https://www.govtrack.us/api/v2/bill?q=' + self.a.replace(" ","%20")+ '&bill_type=house_bill')
+		f = GovTrack.urllib2.urlopen('https://www.govtrack.us/api/v2/bill?q=' + self.a.replace(" ","%20")+ '&bill_type=house_bill&limit=5')
 		json_string = f.read()
 		self.parsed_json = GovTrack.json.loads(json_string)["objects"]
 		f.close()
-		self.counter = 5
 
 		for items in self.parsed_json:
-			for items in range(5):
 				print items['title'] + '--- Bill ID ---' + str(items['id']) + '--- Introduced Year ---' + str(items['introduced_date'])
-				self.counter -= 1
 				print self.counter
 
 		#You can filter out whether or non someone was in office of the time of the bill and they weren't in office, you can just not run the program.
